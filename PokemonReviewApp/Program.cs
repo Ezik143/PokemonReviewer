@@ -1,19 +1,35 @@
 using Microsoft.EntityFrameworkCore;
 using PokemonReviewApp.Data;
 using Scalar.AspNetCore;
+using PokemonReviewApp.Mappers;
+using PokemonReviewApp.interfaces;
+using PokemonReviewApp.repository;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<PokemonMapper>();
+builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
+builder.Services.AddScoped<Seed>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
+
+
 var app = builder.Build();
+
+// Seed the database on startup (idempotent: guarded by !dataContext.PokemonOwners.Any())
+using (var scope = app.Services.CreateScope())
+{
+    scope.ServiceProvider.GetRequiredService<Seed>().SeedDataContext();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

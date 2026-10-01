@@ -1,4 +1,6 @@
-﻿using PokemonReviewApp.Data;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
+using PokemonReviewApp.Data;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.Models.Entities;
 
@@ -7,11 +9,9 @@ namespace PokemonReviewApp.repository
     public class PokemonRepository : IPokemonRepository
     {
         private readonly ApplicationDbContext _context;
-        private readonly IPokemonRepository _pokemonRepository;
-        public PokemonRepository(ApplicationDbContext context, IPokemonRepository pokemonRepository)
+        public PokemonRepository(ApplicationDbContext context)
         {
             _context = context;
-            _pokemonRepository = pokemonRepository;
         }
 
         public Pokemon GetPokemonById(int id)
@@ -19,6 +19,11 @@ namespace PokemonReviewApp.repository
             var pokemon = _context.Pokemons
                 .Where(p => p.Id == id)
                 .FirstOrDefault();
+
+            if (pokemon == null)
+            {
+                throw new Exception("Pokemon not found");
+            }
 
             return pokemon;
         }
@@ -28,27 +33,31 @@ namespace PokemonReviewApp.repository
             var pokemon = _context.Pokemons
                 .Where(p => p.Name == name)
                 .FirstOrDefault();
-
+            if (pokemon == null)
+            {
+                throw new Exception("Pokemon not found");
+            }
             return pokemon;
         }
 
         public decimal GetPokemonRating(int pokeId)
         {
-            var review = _context.Reviews.Where(p => p.Pokemon.Id == pokeId);
-            
-            if(review.Count() <= 0)
+            var average = _context.Reviews
+                        .Where(r => r.Pokemon.Id == pokeId)
+                        .Select(r => (decimal)r.Rating)
+                        .Average();
+
+            if (average <= 0)
             {
                 return 0;
             }
 
-            var toReturn = (decimal)review.Sum(r => r.Rating) / review.Count();
-                 
-            return toReturn; 
+            return average;
         }
 
         public ICollection<Pokemon> GetPokemons()
         {
-            throw new NotImplementedException();
+            return _context.Pokemons.ToList();
         }
 
         public bool PokemonExist(int pokeId)
