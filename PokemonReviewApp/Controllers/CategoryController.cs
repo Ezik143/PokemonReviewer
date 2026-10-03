@@ -21,6 +21,7 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CategoryDto>))]
         public IActionResult GetCategories()
         {
             var categories = _categoryRepository.GetCategories();
@@ -31,6 +32,9 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CategoryDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCategory(int id)
         {
             if (!ModelState.IsValid)
@@ -49,6 +53,9 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{categoryId}/PokemonCategory")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PokemonDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPokemonByCategory(int categoryId)
         {
 

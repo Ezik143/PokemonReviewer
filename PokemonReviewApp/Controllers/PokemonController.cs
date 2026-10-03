@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.Mappers;
+using PokemonReviewApp.Models.Dto;
 using PokemonReviewApp.Models.Entities;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,6 +20,8 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("pokemons")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PokemonDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetPokemons()
         {
             var pokemons = _pokemonRepository.GetPokemons();
@@ -30,6 +33,9 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{name}/name")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PokemonDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPokemonByName(string name)
         {
             var pokemon = _pokemonRepository.GetPokemonByName(name);
@@ -46,6 +52,9 @@ namespace PokemonReviewApp.Controllers
 
 
         [HttpGet("{pokeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PokemonDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPokemon(int pokeId)
         {
             if (!_pokemonRepository.PokemonExist(pokeId))
@@ -61,6 +70,8 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{pokeId}/rating")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(decimal))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetPokemonRatings(int pokeId)
         {
             if (!ModelState.IsValid)

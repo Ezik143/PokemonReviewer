@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.Mappers;
+using PokemonReviewApp.Models.Dto;
 using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.Controllers
@@ -21,6 +22,7 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<CountryDto>))]
         public IActionResult GetCountries()
         {
             var countries = _countryRepository.GetCountries();
@@ -29,6 +31,8 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountryDto))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCountry(int id)
         {
             if (!_countryRepository.CountryExist(id))
@@ -41,6 +45,9 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{OwnerId}/GetCountryByOwner")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CountryDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetCountryByOwner(int OwnerId)
         {
             var country = _countryRepository.GetCountryByOwner(OwnerId);
@@ -56,6 +63,8 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{countryId}/GetOwnersFromCountry")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<OwnerDto>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetOwnersFromCountry(int countryId)
         {
             if (!_countryRepository.CountryExist(countryId))
