@@ -43,7 +43,7 @@ namespace PokemonReviewApp.Controllers
                 return NotFound("Not Found");
             }
 
-            var category = _categoryRepository.GetCategory(id);
+            var category = _categoryRepository.GetCategory(id)!;
             var categoryDto = _categoryMapper.categoryDto(category);
             return Ok(categoryDto);
         }

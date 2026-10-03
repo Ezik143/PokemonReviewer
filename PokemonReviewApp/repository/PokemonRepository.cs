@@ -14,7 +14,7 @@ namespace PokemonReviewApp.repository
             _context = context;
         }
 
-        public Pokemon GetPokemonById(int id)
+        public Pokemon? GetPokemonById(int id)
         {
             var pokemon = _context.Pokemons
                 .Where(p => p.Id == id)
@@ -22,20 +22,20 @@ namespace PokemonReviewApp.repository
 
             if (pokemon == null)
             {
-                throw new Exception("Pokemon not found");
+                return null;
             }
 
             return pokemon;
         }
 
-        public Pokemon GetPokemonByName(string name)
+        public Pokemon? GetPokemonByName(string name)
         {
             var pokemon = _context.Pokemons
                 .Where(p => p.Name == name)
                 .FirstOrDefault();
             if (pokemon == null)
             {
-                throw new Exception("Pokemon not found");
+                return null;
             }
             return pokemon;
         }

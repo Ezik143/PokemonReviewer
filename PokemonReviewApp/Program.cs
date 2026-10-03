@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 using PokemonReviewApp.Mappers;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.repository;
+using PokemonReviewApp.Models.Dto;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<PokemonMapper>();
+builder.Services.AddScoped<OwnerMapper>();
+builder.Services.AddScoped<CountryDto>();
+builder.Services.AddScoped<OwnerDto>();
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<Seed>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi

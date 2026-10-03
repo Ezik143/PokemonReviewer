@@ -33,6 +33,10 @@ namespace PokemonReviewApp.Controllers
         public IActionResult GetPokemonByName(string name)
         {
             var pokemon = _pokemonRepository.GetPokemonByName(name);
+
+            if (pokemon == null)
+                return NotFound("Pokemon not found");
+
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var pokemondto = _pokemonMapper.ToDto(pokemon);
@@ -47,7 +51,7 @@ namespace PokemonReviewApp.Controllers
             if (!_pokemonRepository.PokemonExist(pokeId))
                 return NotFound();
 
-            var pokemon = _pokemonRepository.GetPokemonById(pokeId);
+            var pokemon = _pokemonRepository.GetPokemonById(pokeId)!;
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

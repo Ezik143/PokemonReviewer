@@ -30,14 +30,14 @@ namespace PokemonReviewApp.repository
             return categories;
         }
 
-        public Category GetCategory(int id)
+        public Category? GetCategory(int id)
         {
 
             var category = _context.Categories.FirstOrDefault(c => c.Id == id);
 
             if (category == null)
             {
-                throw new Exception("Not Found");
+                return null;
             }
 
             return category;
