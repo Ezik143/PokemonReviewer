@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.Mappers;
+using PokemonReviewApp.Models.Dto;
 
 
 namespace PokemonReviewApp.Controllers
@@ -22,19 +23,29 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<OwnerDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetOwners()
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var owners = _ownerRepository.GetOwners();
             var ownersDto = _ownerMapper.ToDtoList(owners);
             return Ok(ownersDto);
         }
 
         [HttpGet("{ownerId}/GetOwnerById")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(OwnerDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetOwnerById(int ownerId)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             if (!_ownerRepository.OwnerExist(ownerId))
             {
@@ -46,8 +57,15 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{pokeId}/GetOwnersofPokemon")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<OwnerDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetOwnersofPokemon(int pokeId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             if (!_pokemonRepository.PokemonExist(pokeId))
                 return NotFound("Pokemon not found");
             var owners = _ownerRepository.GetOwnersofPokemon(pokeId);
@@ -56,8 +74,16 @@ namespace PokemonReviewApp.Controllers
         }
 
         [HttpGet("{ownerId}/GetPokemonByOwner")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<PokemonDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPokemonByOwner(int ownerId)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             if (!_ownerRepository.OwnerExist(ownerId))
             {
                 return NotFound("Owner not found");

@@ -8,16 +8,16 @@ namespace PokemonReviewApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReviewerController : ControllerBase
+    public class ReviewController : ControllerBase
     {
-        private readonly IReviewerRepository _reviewerRepository;
-        private readonly ReviewerMapper _reviewerMapper;
+        private readonly IReviewRepository _reviewRepository;
         private readonly ReviewMapper _reviewMapper;
-        public ReviewerController(IReviewerRepository reviewerRepository, ReviewerMapper reviewerMapper, ReviewMapper reviewMapper)
+        private readonly IPokemonRepository _pokemonRepository;
+        public ReviewController(IReviewRepository reviewRepository, ReviewMapper reviewMapper, IPokemonRepository pokemonRepository)
         {
-            _reviewerRepository = reviewerRepository;
-            _reviewerMapper = reviewerMapper;
+            _reviewRepository = reviewRepository;
             _reviewMapper = reviewMapper;
+            _pokemonRepository = pokemonRepository;
         }
 
         [HttpGet]
@@ -30,49 +30,47 @@ namespace PokemonReviewApp.Controllers
                 return BadRequest(ModelState);
             }
 
-            var reviews = _reviewerRepository.GetReviews();
+            var reviews = _reviewRepository.GetReviews();
             var reviewsDto = _reviewMapper.ToDtoList(reviews);
             return Ok(reviewsDto);
         }
 
-        [HttpGet("{reviewerId}/GetReviewer")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReviewerDto))]
+        [HttpGet("{reviewId}/GetReview")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ReviewDto))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetReviewer(int reviewerId)
+        public IActionResult GetReview(int reviewId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (!_reviewerRepository.ReviewerExist(reviewerId))
-                return NotFound("Reviewer not found");
+            if (!_reviewRepository.ReviewExist(reviewId))
+                return NotFound("Review not found");
 
-            var reviewer = _reviewerRepository.GetReviewer(reviewerId);
-            var reviewerDto = _reviewerMapper.ToDto(reviewer);
-            return Ok(reviewerDto);
-        }
-
-        [HttpGet("{reviewerId}/GetReviewsByReviewer")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReviewDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public IActionResult GetReviewsByReviewer(int reviewerId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (!_reviewerRepository.ReviewerExist(reviewerId))
-                return NotFound("Reviewer not found");
-            var review = _reviewerRepository.GetReviewsByReviewer(reviewerId);
-            var reviewDto = _reviewMapper.ToDtoList(review);
-
+            var review = _reviewRepository.GetReview(reviewId)!;
+            var reviewDto = _reviewMapper.ToDto(review);
             return Ok(reviewDto);
         }
 
+        [HttpGet("{pokeId}/GetReviewsByPokemon")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(List<ReviewDto>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetReviewsByPokemon(int pokeId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            if (!_pokemonRepository.PokemonExist(pokeId))
+                return NotFound("Pokemon not found");
+
+            var reviews = _reviewRepository.GetReviewOfPokemon(pokeId);
+            var reviewsDto = _reviewMapper.ToDtoList(reviews);
+            return Ok(reviewsDto);
+        }
     }
 }
