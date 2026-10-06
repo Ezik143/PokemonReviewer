@@ -13,4 +13,8 @@ public partial class CountryMapper
     public partial CountryDto ToDto(Country country);
 
     public partial List<CountryDto> ToDtoList(IEnumerable<Country> country);
+
+
+    [MapperIgnoreTarget(nameof(Country.Owners))]
+    public partial Country toEntitiy(CountryDto dto);
 }

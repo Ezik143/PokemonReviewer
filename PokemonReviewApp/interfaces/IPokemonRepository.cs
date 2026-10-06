@@ -1,4 +1,5 @@
-﻿using PokemonReviewApp.Models.Entities;
+﻿using PokemonReviewApp.Models.Dto;
+using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.interfaces
 {
@@ -9,5 +10,7 @@ namespace PokemonReviewApp.interfaces
         Pokemon? GetPokemonByName(string name);
         decimal GetPokemonRating(int pokeId);
         bool PokemonExist(int pokeId);
+        bool CreatePokemon(int categoryId, Pokemon pokemon);
+        bool Save();
     }
 }

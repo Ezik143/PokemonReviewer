@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using PokemonReviewApp.Data;
 using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Mappers;
 using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.repository;
@@ -18,6 +17,12 @@ public class CountryRepository : ICountryRepository
     public bool CountryExist(int countryId)
     {
         return _context.Countries.Any(c => c.Id == countryId);
+    }
+
+    public bool CreateCountry(Country country)
+    {
+        _context.Add(country);
+        return Save();
     }
 
     public ICollection<Country> GetCountries()
@@ -51,9 +56,17 @@ public class CountryRepository : ICountryRepository
     public ICollection<Owner> GetOwnersFromCountry(int countryId)
     {
         var ownersFromCountry = _context.Owners
-        .Where(o => o.Country.Id == countryId)
+        .Where(o => o.CountryId == countryId)
         .ToList();
 
         return ownersFromCountry;
     }
+
+    public bool Save()
+    {
+        var saved = _context.SaveChanges();
+        return saved > 0 ? true : false;
+    }
+
+
 }

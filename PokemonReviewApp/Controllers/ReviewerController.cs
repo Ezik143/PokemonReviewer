@@ -73,6 +73,22 @@ namespace PokemonReviewApp.Controllers
             return Ok(reviewDto);
         }
 
-
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult CreateReview(ReviewerDto reviewerDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var reviewerMapper = _reviewerMapper.toEntity(reviewerDto);
+            if (!_reviewerRepository.CreateReviewer(reviewerMapper))
+            {
+                ModelState.AddModelError("", "something wrong while saving");
+                return BadRequest(ModelState);
+            }
+            return Ok("Successfully created");
+        }
     }
 }

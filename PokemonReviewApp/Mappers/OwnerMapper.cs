@@ -13,4 +13,8 @@ public partial class OwnerMapper
     public partial OwnerDto ToDto(Owner owner);
 
     public partial List<OwnerDto> ToDtoList(IEnumerable<Owner> owners);
+
+    [MapperIgnoreTarget(nameof(Owner.Country))]
+    [MapperIgnoreTarget(nameof(Owner.PokemonOwners))]
+    public partial Owner toEntity(OwnerDto dto);
 }

@@ -12,4 +12,8 @@ public partial class ReviewMapper
     public partial ReviewDto ToDto(Review review);
 
     public partial List<ReviewDto> ToDtoList(IEnumerable<Review> reviews);
+
+    [MapperIgnoreTarget(nameof(Review.Reviewer))]
+    [MapperIgnoreTarget(nameof(Review.Pokemon))]
+    public partial Review toEntity(ReviewDto dto);
 }

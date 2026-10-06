@@ -1,6 +1,7 @@
 using System;
 using PokemonReviewApp.Data;
 using PokemonReviewApp.interfaces;
+using PokemonReviewApp.Models.Dto;
 using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.repository;
@@ -12,6 +13,13 @@ public class ReviewRepository : IReviewRepository
     {
         _context = context;
     }
+
+    public bool CreateReviews(Review createReview)
+    {
+        _context.Add(createReview);
+        return Save();
+    }
+
     public Review GetReview(int reviewId)
     {
         return _context.Reviews.FirstOrDefault(r => r.Id == reviewId);
@@ -19,7 +27,7 @@ public class ReviewRepository : IReviewRepository
 
     public ICollection<Review> GetReviewOfPokemon(int pokeId)
     {
-        return _context.Reviews.Where(r => r.Pokemon.Id == pokeId).ToList();
+        return _context.Reviews.Where(r => r.PokemonId == pokeId).ToList();
     }
 
     public ICollection<Review> GetReviews()
@@ -30,5 +38,11 @@ public class ReviewRepository : IReviewRepository
     public bool ReviewExist(int reviewId)
     {
         return _context.Reviews.Any(r => r.Id == reviewId);
+    }
+
+    public bool Save()
+    {
+        var save = _context.SaveChanges();
+        return save > 0 ? true : false;
     }
 }

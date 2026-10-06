@@ -11,4 +11,7 @@ public partial class ReviewerMapper
     public partial ReviewerDto ToDto(Reviewer reviewer);
 
     public partial List<ReviewerDto> ToDtoList(IEnumerable<Reviewer> reviewers);
+
+    [MapperIgnoreTarget(nameof(Reviewer.Reviews))]
+    public partial Reviewer toEntity(ReviewerDto dto);
 }

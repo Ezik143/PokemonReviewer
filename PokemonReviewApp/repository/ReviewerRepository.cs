@@ -12,6 +12,13 @@ public class ReviewerRepository : IReviewerRepository
     {
         _context = context;
     }
+
+    public bool CreateReviewer(Reviewer review)
+    {
+        _context.Add(review);
+        return Save();
+    }
+
     public Reviewer GetReviewer(int reviewerId)
     {
         return _context.Reviewers.FirstOrDefault(r => r.Id == reviewerId);
@@ -24,12 +31,19 @@ public class ReviewerRepository : IReviewerRepository
 
     public ICollection<Review> GetReviewsByReviewer(int reviewerId)
     {
-        var reviews = _context.Reviews.Where(r => r.Reviewer.Id == reviewerId).ToList();
+        var reviews = _context.Reviews.Where(r => r.ReviewerId == reviewerId).ToList();
         return reviews;
     }
 
     public bool ReviewerExist(int reviewerId)
     {
         return _context.Reviewers.Any(r => r.Id == reviewerId);
+    }
+
+    public bool Save()
+    {
+        var save = _context.SaveChanges();
+
+        return save > 0 ? true : false;
     }
 }

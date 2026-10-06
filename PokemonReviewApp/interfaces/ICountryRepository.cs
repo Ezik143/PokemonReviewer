@@ -10,4 +10,7 @@ public interface ICountryRepository
     Country? GetCountryByOwner(int OwnerId);
     ICollection<Owner> GetOwnersFromCountry(int countryId);
     bool CountryExist(int countryId);
+    bool CreateCountry(Country country);
+
+    bool Save();
 }

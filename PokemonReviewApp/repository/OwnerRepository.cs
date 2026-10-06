@@ -12,6 +12,13 @@ public class OwnerRepository : IOwnerRepository
     {
         _context = context;
     }
+
+    public bool CreateOwner(Owner owner)
+    {
+        _context.Add(owner);
+        return Save();
+    }
+
     public Owner GetOwnerById(int ownerId)
     {
         return _context.Owners.FirstOrDefault(o => o.Id == ownerId);
@@ -38,5 +45,10 @@ public class OwnerRepository : IOwnerRepository
     public bool OwnerExist(int ownerId)
     {
         return _context.Owners.Any(o => o.Id == ownerId);
+    }
+    public bool Save()
+    {
+        var saved = _context.SaveChanges();
+        return saved > 0 ? true : false;
     }
 }

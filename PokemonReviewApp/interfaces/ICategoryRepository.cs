@@ -1,4 +1,5 @@
-﻿using PokemonReviewApp.Models.Entities;
+﻿using PokemonReviewApp.Models.Dto;
+using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.interfaces
 {
@@ -8,5 +9,7 @@ namespace PokemonReviewApp.interfaces
         Category? GetCategory(int id);
         ICollection<Pokemon> GetPokemonByCategory(int categoryId);
         bool CategoryExist(int id);
+        bool CreateCategory(Category category);
+        bool Save();
     }
 }

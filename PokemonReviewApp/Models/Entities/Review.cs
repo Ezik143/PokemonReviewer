@@ -6,6 +6,8 @@ public class Review
     public string Title { get; set; } = string.Empty;
     public string Text { get; set; } = string.Empty;
     public int Rating { get; set; }
+    public int ReviewerId { get; set; }
     public Reviewer Reviewer { get; set; } = null!;
+    public int PokemonId { get; set; }
     public Pokemon Pokemon { get; set; } = null!;
 }
