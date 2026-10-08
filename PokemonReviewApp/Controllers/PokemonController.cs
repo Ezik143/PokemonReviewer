@@ -140,5 +140,28 @@ namespace PokemonReviewApp.Controllers
 
             return Ok("Successfully updated");
         }
+
+        [HttpDelete("{pokeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult DeletePokemon(int pokeId)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_pokemonRepository.PokemonExist(pokeId))
+                return NotFound("Pokemon not found");
+
+            var pokemon = _pokemonRepository.GetPokemonById(pokeId)!;
+
+            if (!_pokemonRepository.DeletePokemon(pokemon))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return BadRequest(ModelState);
+            }
+
+            return Ok("Successfully deleted");
+        }
     }
 }

@@ -34,6 +34,12 @@ namespace PokemonReviewApp.repository
             return Save();
         }
 
+        public bool DeletePokemon(Pokemon pokemon)
+        {
+            _context.Remove(pokemon);
+            return Save();
+        }
+
         public Pokemon? GetPokemonById(int id)
         {
             var pokemon = _context.Pokemons

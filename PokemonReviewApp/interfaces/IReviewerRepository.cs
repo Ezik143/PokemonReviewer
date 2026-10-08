@@ -11,5 +11,6 @@ public interface IReviewerRepository
     bool ReviewerExist(int reviewerId);
     bool CreateReviewer(Reviewer review);
     bool UpdateReviewer(Reviewer reviewer);
+    bool DeleteReviewer(Reviewer reviewer);
     bool Save();
 }
