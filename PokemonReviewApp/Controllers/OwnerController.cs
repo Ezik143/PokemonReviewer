@@ -99,7 +99,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreateOwner(OwnerDto ownerDto)
+        public IActionResult CreateOwner(OwnerCreateDto ownerDto)
         {
             if (ownerDto == null) return BadRequest(ModelState);
             if (!_countryRepository.CountryExist(ownerDto.CountryId)) return NotFound("Country not found");

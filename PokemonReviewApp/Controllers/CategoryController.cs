@@ -77,7 +77,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreateCategory(CategoryDto categoryCreate)
+        public IActionResult CreateCategory(CategoryCreateDto categoryCreate)
         {
             if (categoryCreate == null)
                 return BadRequest();

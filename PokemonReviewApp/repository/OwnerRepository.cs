@@ -38,7 +38,6 @@ public class OwnerRepository : IOwnerRepository
     public ICollection<Pokemon> GetPokemonByOwner(int ownerId)
     {
         var pokemons = _context.Pokemons.Where(p => p.PokemonOwners.Any(po => po.OwnerId == ownerId)).ToList();
-
         return pokemons;
     }
 

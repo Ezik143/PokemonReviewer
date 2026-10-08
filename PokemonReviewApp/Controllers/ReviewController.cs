@@ -79,7 +79,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult createReview(ReviewDto reviewDto)
+        public IActionResult createReview(ReviewCreateDto reviewDto)
         {
             if (reviewDto == null)
                 return BadRequest(ModelState);

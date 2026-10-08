@@ -80,7 +80,7 @@ namespace PokemonReviewApp.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IActionResult CreateCountry(CountryDto createCountry)
+        public IActionResult CreateCountry(CountryCreateDto createCountry)
         {
             var country = _countryRepository.GetCountries()
             .Where(c => c.Name.Trim().ToUpper() == createCountry.Name.Trim().ToUpper()).FirstOrDefault();

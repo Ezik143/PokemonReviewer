@@ -13,7 +13,8 @@ public partial class ReviewMapper
 
     public partial List<ReviewDto> ToDtoList(IEnumerable<Review> reviews);
 
+    [MapperIgnoreTarget(nameof(Review.Id))]
     [MapperIgnoreTarget(nameof(Review.Reviewer))]
     [MapperIgnoreTarget(nameof(Review.Pokemon))]
-    public partial Review toEntity(ReviewDto dto);
+    public partial Review toEntity(ReviewCreateDto dto);
 }

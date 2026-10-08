@@ -15,8 +15,9 @@ public partial class PokemonMapper
     public partial List<PokemonDto> ToDtoList(
         IEnumerable<Pokemon> pokemons);
 
+    [MapperIgnoreTarget(nameof(Pokemon.Id))]
     [MapperIgnoreTarget(nameof(Pokemon.Reviews))]
     [MapperIgnoreTarget(nameof(Pokemon.PokemonOwners))]
     [MapperIgnoreTarget(nameof(Pokemon.PokemonCategories))]
-    public partial Pokemon ToEntity(PokemonDto dto);
+    public partial Pokemon ToEntity(PokemonCreateDto dto);
 }

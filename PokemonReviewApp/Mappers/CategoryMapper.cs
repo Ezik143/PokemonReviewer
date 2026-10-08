@@ -15,8 +15,9 @@ public partial class CategoryMapper
    IEnumerable<Category> category);
 
 
+    [MapperIgnoreTarget(nameof(Category.Id))]
     [MapperIgnoreTarget(nameof(Category.PokemonCategories))]
-    public partial Category ToEntity(CategoryDto dto);
+    public partial Category ToEntity(CategoryCreateDto dto);
 
 
 }

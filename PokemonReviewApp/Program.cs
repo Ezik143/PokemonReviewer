@@ -4,7 +4,6 @@ using Scalar.AspNetCore;
 using PokemonReviewApp.Mappers;
 using PokemonReviewApp.interfaces;
 using PokemonReviewApp.repository;
-using PokemonReviewApp.Models.Dto;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,8 +17,6 @@ builder.Services.AddScoped<ReviewMapper>();
 builder.Services.AddScoped<CategoryMapper>();
 builder.Services.AddScoped<CountryMapper>();
 builder.Services.AddScoped<ReviewerMapper>();
-builder.Services.AddScoped<CountryDto>();
-builder.Services.AddScoped<OwnerDto>();
 builder.Services.AddScoped<IPokemonRepository, PokemonRepository>();
 builder.Services.AddScoped<IReviewRepository, ReviewRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
