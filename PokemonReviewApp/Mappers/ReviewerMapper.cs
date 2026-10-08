@@ -15,4 +15,8 @@ public partial class ReviewerMapper
     [MapperIgnoreTarget(nameof(Reviewer.Id))]
     [MapperIgnoreTarget(nameof(Reviewer.Reviews))]
     public partial Reviewer toEntity(ReviewerCreateDto dto);
+
+    [MapperIgnoreTarget(nameof(Reviewer.Id))]
+    [MapperIgnoreTarget(nameof(Reviewer.Reviews))]
+    public partial void Update(ReviewerCreateDto dto, Reviewer reviewer);
 }

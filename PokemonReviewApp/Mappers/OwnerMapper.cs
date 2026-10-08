@@ -18,4 +18,9 @@ public partial class OwnerMapper
     [MapperIgnoreTarget(nameof(Owner.Country))]
     [MapperIgnoreTarget(nameof(Owner.PokemonOwners))]
     public partial Owner toEntity(OwnerCreateDto dto);
+
+    [MapperIgnoreTarget(nameof(Owner.Id))]
+    [MapperIgnoreTarget(nameof(Owner.Country))]
+    [MapperIgnoreTarget(nameof(Owner.PokemonOwners))]
+    public partial void Update(OwnerCreateDto dto, Owner owner);
 }

@@ -11,5 +11,6 @@ public interface IReviewRepository
     ICollection<Review> GetReviewOfPokemon(int pokeId);
     bool ReviewExist(int reviewId);
     bool CreateReviews(Review createReview);
+    bool UpdateReview(Review review);
     bool Save();
 }

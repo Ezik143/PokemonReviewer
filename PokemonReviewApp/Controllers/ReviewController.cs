@@ -101,5 +101,41 @@ namespace PokemonReviewApp.Controllers
 
             return Ok("Successfully created");
         }
+
+        [HttpPut("{reviewId}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(string))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult UpdateReview(int reviewId, ReviewCreateDto reviewUpdate)
+        {
+            if (reviewUpdate == null)
+                return BadRequest(ModelState);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!_reviewRepository.ReviewExist(reviewId))
+                return NotFound("Review not found");
+
+            if (!_pokemonRepository.PokemonExist(reviewUpdate.PokemonId))
+                return NotFound("Pokemon not found");
+
+            if (!_reviewerRepository.ReviewerExist(reviewUpdate.ReviewerId))
+                return NotFound("Reviewer not found");
+
+            var review = _reviewRepository.GetReview(reviewId);
+
+            _reviewMapper.Update(reviewUpdate, review);
+            review.PokemonId = reviewUpdate.PokemonId;
+            review.ReviewerId = reviewUpdate.ReviewerId;
+
+            if (!_reviewRepository.UpdateReview(review))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return BadRequest(ModelState);
+            }
+
+            return Ok("Successfully updated");
+        }
     }
 }

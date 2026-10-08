@@ -19,5 +19,9 @@ public partial class CategoryMapper
     [MapperIgnoreTarget(nameof(Category.PokemonCategories))]
     public partial Category ToEntity(CategoryCreateDto dto);
 
+    [MapperIgnoreTarget(nameof(Category.Id))]
+    [MapperIgnoreTarget(nameof(Category.PokemonCategories))]
+    public partial void Update(CategoryCreateDto dto, Category category);
+
 
 }

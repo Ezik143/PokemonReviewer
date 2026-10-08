@@ -20,4 +20,10 @@ public partial class PokemonMapper
     [MapperIgnoreTarget(nameof(Pokemon.PokemonOwners))]
     [MapperIgnoreTarget(nameof(Pokemon.PokemonCategories))]
     public partial Pokemon ToEntity(PokemonCreateDto dto);
+
+    [MapperIgnoreTarget(nameof(Pokemon.Id))]
+    [MapperIgnoreTarget(nameof(Pokemon.Reviews))]
+    [MapperIgnoreTarget(nameof(Pokemon.PokemonOwners))]
+    [MapperIgnoreTarget(nameof(Pokemon.PokemonCategories))]
+    public partial void Update(PokemonCreateDto dto, Pokemon pokemon);
 }

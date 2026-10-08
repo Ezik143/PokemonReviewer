@@ -18,4 +18,8 @@ public partial class CountryMapper
     [MapperIgnoreTarget(nameof(Country.Id))]
     [MapperIgnoreTarget(nameof(Country.Owners))]
     public partial Country toEntitiy(CountryCreateDto dto);
+
+    [MapperIgnoreTarget(nameof(Country.Id))]
+    [MapperIgnoreTarget(nameof(Country.Owners))]
+    public partial void Update(CountryCreateDto dto, Country country);
 }

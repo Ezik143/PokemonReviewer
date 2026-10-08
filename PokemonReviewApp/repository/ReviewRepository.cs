@@ -20,6 +20,12 @@ public class ReviewRepository : IReviewRepository
         return Save();
     }
 
+    public bool UpdateReview(Review review)
+    {
+        _context.Update(review);
+        return Save();
+    }
+
     public Review GetReview(int reviewId)
     {
         return _context.Reviews.FirstOrDefault(r => r.Id == reviewId);

@@ -19,6 +19,12 @@ public class OwnerRepository : IOwnerRepository
         return Save();
     }
 
+    public bool UpdateOwner(Owner owner)
+    {
+        _context.Update(owner);
+        return Save();
+    }
+
     public Owner GetOwnerById(int ownerId)
     {
         return _context.Owners.FirstOrDefault(o => o.Id == ownerId);

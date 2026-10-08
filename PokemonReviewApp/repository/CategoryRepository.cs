@@ -30,6 +30,12 @@ namespace PokemonReviewApp.repository
             return Save();
         }
 
+        public bool UpdateCategory(Category category)
+        {
+            _context.Update(category);
+            return Save();
+        }
+
         public ICollection<Category> GetCategories()
         {
             var categories = _context.Categories.ToList();

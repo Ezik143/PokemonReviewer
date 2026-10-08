@@ -19,6 +19,12 @@ public class ReviewerRepository : IReviewerRepository
         return Save();
     }
 
+    public bool UpdateReviewer(Reviewer reviewer)
+    {
+        _context.Update(reviewer);
+        return Save();
+    }
+
     public Reviewer GetReviewer(int reviewerId)
     {
         return _context.Reviewers.FirstOrDefault(r => r.Id == reviewerId);

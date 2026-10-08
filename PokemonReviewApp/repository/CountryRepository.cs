@@ -25,6 +25,12 @@ public class CountryRepository : ICountryRepository
         return Save();
     }
 
+    public bool UpdateCountry(Country country)
+    {
+        _context.Update(country);
+        return Save();
+    }
+
     public ICollection<Country> GetCountries()
     {
         var countries = _context.Countries.ToList();

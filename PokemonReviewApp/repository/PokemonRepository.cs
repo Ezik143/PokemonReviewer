@@ -28,6 +28,12 @@ namespace PokemonReviewApp.repository
             return Save();
         }
 
+        public bool UpdatePokemon(Pokemon pokemon)
+        {
+            _context.Update(pokemon);
+            return Save();
+        }
+
         public Pokemon? GetPokemonById(int id)
         {
             var pokemon = _context.Pokemons
