@@ -1,7 +1,6 @@
 using System;
 using PokemonReviewApp.Data;
 using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Models.Dto;
 using PokemonReviewApp.Models.Entities;
 
 namespace PokemonReviewApp.repository;
