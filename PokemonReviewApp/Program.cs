@@ -11,6 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FlutterDevelopment", policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+});
 builder.Services.AddScoped<PokemonMapper>();
 builder.Services.AddScoped<OwnerMapper>();
 builder.Services.AddScoped<ReviewMapper>();
@@ -46,9 +51,15 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();
+    app.UseCors("FlutterDevelopment");
 }
 
-app.UseHttpsRedirection();
+// The Flutter development client uses the HTTP launch profile. Production
+// deployments should use HTTPS and keep this redirect enabled there.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthorization();
 
