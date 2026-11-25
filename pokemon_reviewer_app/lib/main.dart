@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokemon_reviewer_app/widgets/PokemonScreen.dart'; // Adjust import
+import 'package:pokemon_reviewer_app/widgets/pokemon_screen.dart';
 
 void main() {
   runApp(const MainApp());

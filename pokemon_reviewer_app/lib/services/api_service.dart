@@ -21,23 +21,4 @@ class ApiService {
       'Failed to load Pokemon. Status code: ${response.statusCode}',
     );
   }
-
-  Future<void> createPokemon(Pokemon pokemon) async {
-    final response = await http.post(
-      Uri.parse('${ApiConfig.baseUrl}/Pokemon?catId=1'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(pokemon.toJson()),
-    );
-
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return;
-    }
-
-    throw Exception(
-      'Failed to create Pokemon. Status code: ${response.statusCode}. '
-      '${response.body}',
-    );
-  }
 }
