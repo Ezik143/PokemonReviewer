@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
-using PokemonReviewApp.Data;
-using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Data;
+using PokemonReviewAPI.interfaces;
+using PokemonReviewAPI.Models.Entities;
 
-namespace PokemonReviewApp.repository
+namespace PokemonReviewAPI.repository
 {
     public class PokemonRepository : IPokemonRepository
     {

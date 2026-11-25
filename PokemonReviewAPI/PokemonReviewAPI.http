@@ -1,6 +1,23 @@
-@PokemonReviewApp_HostAddress = http://localhost:5109
+@PokemonReviewAPI_HostAddress = http://localhost:5109
 
-GET {{PokemonReviewApp_HostAddress}}/weatherforecast/
+# Interactive API documentation (Scalar)
+GET {{PokemonReviewAPI_HostAddress}}/scalar/v1
+Accept: text/html
+
+###
+
+# OpenAPI document
+GET {{PokemonReviewAPI_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{PokemonReviewAPI_HostAddress}}/api/Pokemon/pokemons
+Accept: application/json
+
+###
+
+GET {{PokemonReviewAPI_HostAddress}}/api/Pokemon/1
 Accept: application/json
 
 ###

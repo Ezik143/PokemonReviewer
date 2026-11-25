@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PokemonReviewApp.Migrations
+namespace PokemonReviewAPI.Migrations
 {
     /// <inheritdoc />
     public partial class RenamePokemonOwnersTable : Migration

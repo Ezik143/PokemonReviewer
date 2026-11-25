@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
-using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Mappers;
-using PokemonReviewApp.Models.Dto;
+using PokemonReviewAPI.interfaces;
+using PokemonReviewAPI.Mappers;
+using PokemonReviewAPI.Models.Dto;
 
 
-namespace PokemonReviewApp.Controllers
+namespace PokemonReviewAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

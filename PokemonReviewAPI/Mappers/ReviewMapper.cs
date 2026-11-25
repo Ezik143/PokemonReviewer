@@ -1,8 +1,8 @@
-using PokemonReviewApp.Models.Dto;
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Models.Dto;
+using PokemonReviewAPI.Models.Entities;
 using Riok.Mapperly.Abstractions;
 
-namespace PokemonReviewApp.Mappers;
+namespace PokemonReviewAPI.Mappers;
 
 [Mapper]
 public partial class ReviewMapper

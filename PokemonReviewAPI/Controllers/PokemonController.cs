@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Mappers;
-using PokemonReviewApp.Models.Dto;
-using PokemonReviewApp.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
+using PokemonReviewAPI.interfaces;
+using PokemonReviewAPI.Mappers;
+using PokemonReviewAPI.Models.Dto;
+using PokemonReviewAPI.Models.Entities;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace PokemonReviewApp.Controllers
+namespace PokemonReviewAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

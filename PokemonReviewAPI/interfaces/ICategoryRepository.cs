@@ -1,7 +1,7 @@
-﻿using PokemonReviewApp.Models.Dto;
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Models.Dto;
+using PokemonReviewAPI.Models.Entities;
 
-namespace PokemonReviewApp.interfaces
+namespace PokemonReviewAPI.interfaces
 {
     public interface ICategoryRepository
     {

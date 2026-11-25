@@ -21,103 +21,10 @@ class _PokemonScreenState extends State<PokemonScreen> {
   }
 
   Future<void> _addPokemon() async {
-    final nameController = TextEditingController();
-    DateTime? selectedBirthdate;
-
-    final formKey = GlobalKey<FormState>();
-
     final pokemon = await showDialog<Pokemon>(
       context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            return AlertDialog(
-              title: const Text('Add Pokémon'),
-              content: Form(
-                key: formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      controller: nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        border: OutlineInputBorder(),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return 'Enter a Pokémon name';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      readOnly: true,
-                      decoration: InputDecoration(
-                        labelText: 'Birthdate',
-                        border: const OutlineInputBorder(),
-                        hintText: selectedBirthdate == null
-                            ? 'Select a date'
-                            : '${selectedBirthdate!.year}-'
-                                  '${selectedBirthdate!.month.toString().padLeft(2, '0')}-'
-                                  '${selectedBirthdate!.day.toString().padLeft(2, '0')}',
-                        suffixIcon: const Icon(Icons.calendar_today),
-                      ),
-                      onTap: () async {
-                        final date = await showDatePicker(
-                          context: context,
-                          firstDate: DateTime(1900),
-                          lastDate: DateTime.now(),
-                          initialDate: DateTime.now(),
-                        );
-
-                        if (date != null) {
-                          setDialogState(() {
-                            selectedBirthdate = date;
-                          });
-                        }
-                      },
-                      validator: (_) {
-                        if (selectedBirthdate == null) {
-                          return 'Select a birthdate';
-                        }
-                        return null;
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (!formKey.currentState!.validate()) {
-                      return;
-                    }
-
-                    Navigator.pop(
-                      context,
-                      Pokemon(
-                        id: 0,
-                        name: nameController.text.trim(),
-                        birthdate: selectedBirthdate!,
-                      ),
-                    );
-                  },
-                  child: const Text('Save'),
-                ),
-              ],
-            );
-          },
-        );
-      },
+      builder: (_) => const _AddPokemonDialog(),
     );
-
-    nameController.dispose();
 
     if (pokemon == null) {
       return;
@@ -200,6 +107,114 @@ class _PokemonScreenState extends State<PokemonScreen> {
           },
         ),
       ),
+    );
+  }
+}
+
+class _AddPokemonDialog extends StatefulWidget {
+  const _AddPokemonDialog();
+
+  @override
+  State<_AddPokemonDialog> createState() => _AddPokemonDialogState();
+}
+
+class _AddPokemonDialogState extends State<_AddPokemonDialog> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  DateTime? _selectedBirthdate;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _selectBirthdate() async {
+    final date = await showDatePicker(
+      context: context,
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      initialDate: DateTime.now(),
+    );
+
+    if (!mounted || date == null) {
+      return;
+    }
+
+    setState(() {
+      _selectedBirthdate = date;
+    });
+  }
+
+  void _save() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    Navigator.of(context).pop(
+      Pokemon(
+        id: 0,
+        name: _nameController.text.trim(),
+        birthdate: _selectedBirthdate!,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final birthdate = _selectedBirthdate;
+
+    return AlertDialog(
+      title: const Text('Add Pokémon'),
+      content: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
+              controller: _nameController,
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                border: OutlineInputBorder(),
+              ),
+              validator: (value) {
+                if (value == null || value.trim().isEmpty) {
+                  return 'Enter a Pokémon name';
+                }
+                return null;
+              },
+            ),
+            const SizedBox(height: 16),
+            TextFormField(
+              readOnly: true,
+              decoration: InputDecoration(
+                labelText: 'Birthdate',
+                border: const OutlineInputBorder(),
+                hintText: birthdate == null
+                    ? 'Select a date'
+                    : '${birthdate.year}-'
+                          '${birthdate.month.toString().padLeft(2, '0')}-'
+                          '${birthdate.day.toString().padLeft(2, '0')}',
+                suffixIcon: const Icon(Icons.calendar_today),
+              ),
+              onTap: _selectBirthdate,
+              validator: (_) {
+                if (_selectedBirthdate == null) {
+                  return 'Select a birthdate';
+                }
+                return null;
+              },
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(onPressed: _save, child: const Text('Save')),
+      ],
     );
   }
 }

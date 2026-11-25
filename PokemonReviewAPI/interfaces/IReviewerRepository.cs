@@ -1,7 +1,7 @@
 using System;
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Models.Entities;
 
-namespace PokemonReviewApp.interfaces;
+namespace PokemonReviewAPI.interfaces;
 
 public interface IReviewerRepository
 {

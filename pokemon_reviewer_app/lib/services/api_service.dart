@@ -5,7 +5,6 @@ import 'package:pokemon_reviewer_app/core/api_config.dart';
 import 'package:pokemon_reviewer_app/models/pokemon.dart';
 
 class ApiService {
-
   Future<List<Pokemon>> fetchPokemon() async {
     final response = await http.get(
       Uri.parse('${ApiConfig.baseUrl}/Pokemon/pokemons'),
@@ -23,9 +22,9 @@ class ApiService {
     );
   }
 
-  Future<Pokemon> createPokemon(Pokemon pokemon) async {
+  Future<void> createPokemon(Pokemon pokemon) async {
     final response = await http.post(
-      Uri.parse('${ApiConfig.baseUrl}/Pokemon/pokemons'),
+      Uri.parse('${ApiConfig.baseUrl}/Pokemon?catId=1'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -33,13 +32,12 @@ class ApiService {
     );
 
     if (response.statusCode == 200 || response.statusCode == 201) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-
-      return Pokemon.fromJson(data);
+      return;
     }
 
     throw Exception(
-      'Failed to create Pokemon. Status code: ${response.statusCode}',
+      'Failed to create Pokemon. Status code: ${response.statusCode}. '
+      '${response.body}',
     );
   }
 }

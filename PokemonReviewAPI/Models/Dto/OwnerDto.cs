@@ -1,4 +1,4 @@
-namespace PokemonReviewApp.Models.Dto;
+namespace PokemonReviewAPI.Models.Dto;
 
 public class OwnerDto
 {

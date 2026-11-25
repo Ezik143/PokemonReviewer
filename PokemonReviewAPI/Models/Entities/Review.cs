@@ -1,4 +1,4 @@
-namespace PokemonReviewApp.Models.Entities;
+namespace PokemonReviewAPI.Models.Entities;
 
 public class Review
 {

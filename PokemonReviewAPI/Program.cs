@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
-using PokemonReviewApp.Data;
+using Microsoft.OpenApi.Models;
+using PokemonReviewAPI.Data;
 using Scalar.AspNetCore;
-using PokemonReviewApp.Mappers;
-using PokemonReviewApp.interfaces;
-using PokemonReviewApp.repository;
+using PokemonReviewAPI.Mappers;
+using PokemonReviewAPI.interfaces;
+using PokemonReviewAPI.repository;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,20 @@ builder.Services.AddScoped<IOwnerRepository, OwnerRepository>();
 builder.Services.AddScoped<IReviewerRepository, ReviewerRepository>();
 builder.Services.AddScoped<Seed>();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, _, _) =>
+    {
+        document.Info = new OpenApiInfo
+        {
+            Title = "Pokemon Review API",
+            Version = "v1",
+            Description = "REST API for managing Pokémon, owners, reviewers, categories, and reviews."
+        };
+
+        return Task.CompletedTask;
+    });
+});
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -50,7 +64,15 @@ using (var scope = app.Services.CreateScope())
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(options =>
+    {
+        options
+            .WithTitle("Pokemon Review API")
+            .WithTheme(ScalarTheme.Purple)
+            .EnableDarkMode()
+            .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient)
+            .WithDocumentDownloadType(DocumentDownloadType.Both);
+    });
     app.UseCors("FlutterDevelopment");
 }
 

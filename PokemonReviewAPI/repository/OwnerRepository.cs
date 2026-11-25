@@ -1,9 +1,9 @@
 using System;
-using PokemonReviewApp.Data;
-using PokemonReviewApp.interfaces;
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Data;
+using PokemonReviewAPI.interfaces;
+using PokemonReviewAPI.Models.Entities;
 
-namespace PokemonReviewApp.repository;
+namespace PokemonReviewAPI.repository;
 
 public class OwnerRepository : IOwnerRepository
 {

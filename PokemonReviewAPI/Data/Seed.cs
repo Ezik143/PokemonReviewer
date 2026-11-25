@@ -1,6 +1,6 @@
-using PokemonReviewApp.Models.Entities;
+using PokemonReviewAPI.Models.Entities;
 
-namespace PokemonReviewApp.Data
+namespace PokemonReviewAPI.Data
 {
     public class Seed
     {

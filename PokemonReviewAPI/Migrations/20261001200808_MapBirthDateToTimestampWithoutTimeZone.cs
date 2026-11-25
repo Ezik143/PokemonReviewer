@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PokemonReviewApp.Migrations
+namespace PokemonReviewAPI.Migrations
 {
     /// <inheritdoc />
     public partial class MapBirthDateToTimestampWithoutTimeZone : Migration

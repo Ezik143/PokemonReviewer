@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace PokemonReviewApp.Models.Dto;
+namespace PokemonReviewAPI.Models.Dto;
 
 public class ReviewerCreateDto
 {
